@@ -1,8 +1,9 @@
-import 'package:financefy_app/app/modules/core/presenter/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
+import '../../../domain/entities/personal_transaction.dart';
+import '../../components/organisms/transaction_form_widget.dart';
 import 'states/transactions_dashboard_state.dart';
 import 'transactions_dashboard_store.dart';
 
@@ -48,43 +49,30 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TransactionsStatsWidget(store: store),
-        Expanded(
-          child: TransactionsDetailsWidget(store: store),
-        ),
-        Card(
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: "Nome",
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    labelText: "Valor (R\$)",
-                  ),
-                ),
-                TextButton(
-                  child: Text(
-                    "Adicionar transação",
-                    style: TextStyle(
-                      color: AppColors.purple,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {},
-                )
-              ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            TransactionsStatsWidget(store: store),
+            Expanded(
+              child: TransactionsDetailsWidget(store: store),
             ),
-          ),
-        )
-      ],
+            Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: TransactionFormWidget(
+                  onSubmit: addTransaction,
+                ),
+              ),
+            )
+          ],
+        );
+      },
     );
+  }
+
+  void addTransaction(PersonalTransaction transaction) {
+    return store.addTransaction(transaction);
   }
 }

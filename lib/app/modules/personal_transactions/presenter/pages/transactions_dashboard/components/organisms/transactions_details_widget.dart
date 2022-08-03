@@ -12,7 +12,7 @@ class TransactionsDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = getItems();
+    final items = store.getTransactions();
 
     return ListView.builder(
       itemCount: items.length,
@@ -20,9 +20,5 @@ class TransactionsDetailsWidget extends StatelessWidget {
         item: items[i],
       ),
     );
-  }
-
-  List<PersonalTransaction> getItems() {
-    return store.state.data.items;
   }
 }
