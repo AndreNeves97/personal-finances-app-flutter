@@ -12,7 +12,7 @@ import 'components/organisms/transactions_stats_widget.dart';
 
 class TransactionsDashboardPage extends StatefulWidget {
   final String title;
-  const TransactionsDashboardPage({Key? key, this.title = 'FinanceFy'})
+  const TransactionsDashboardPage({Key? key, this.title = 'Personal finances'})
       : super(key: key);
 
   @override
@@ -27,15 +27,42 @@ class TransactionsDashboardPageState extends State<TransactionsDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title), actions: [
+        IconButton(
+          onPressed: _openNewTransactionFormModal,
+          icon: const Icon(Icons.add),
+        )
+      ]),
       body: ScopedBuilder<TransactionsDashboardStore, Exception,
           TransactionsDashboardState>(
         store: store,
         onState: (_, state) => _Body(store: store),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _openNewTransactionFormModal,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void _openNewTransactionFormModal() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: TransactionFormWidget(
+            onSubmit: _onSubmitTransactionFormModal,
+          ),
+        );
+      },
+    );
+  }
+
+  void _onSubmitTransactionFormModal(PersonalTransaction transaction) {
+    store.addTransaction(transaction);
+    Navigator.of(context).pop();
   }
 }
 
@@ -57,22 +84,9 @@ class _Body extends StatelessWidget {
             Expanded(
               child: TransactionsDetailsWidget(store: store),
             ),
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: TransactionFormWidget(
-                  onSubmit: addTransaction,
-                ),
-              ),
-            )
           ],
         );
       },
     );
-  }
-
-  void addTransaction(PersonalTransaction transaction) {
-    return store.addTransaction(transaction);
   }
 }

@@ -1,20 +1,26 @@
-import 'package:financefy_app/app/modules/core/presenter/styles/app_colors.dart';
 import 'package:financefy_app/app/modules/personal_transactions/domain/entities/personal_transaction.dart';
 import 'package:flutter/material.dart';
 
-class TransactionFormWidget extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionFormWidget extends StatefulWidget {
   final void Function(PersonalTransaction transaction) onSubmit;
 
-  TransactionFormWidget({Key? key, required this.onSubmit}) : super(key: key);
+  const TransactionFormWidget({Key? key, required this.onSubmit})
+      : super(key: key);
+
+  @override
+  State<TransactionFormWidget> createState() => _TransactionFormWidgetState();
+}
+
+class _TransactionFormWidgetState extends State<TransactionFormWidget> {
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextField(
+          autofocus: true,
           controller: titleController,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
@@ -34,7 +40,7 @@ class TransactionFormWidget extends StatelessWidget {
           child: Text(
             "Adicionar transação",
             style: TextStyle(
-              color: AppColors.purple,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -61,6 +67,6 @@ class TransactionFormWidget extends StatelessWidget {
       date: DateTime.now(),
     );
 
-    onSubmit(transaction);
+    widget.onSubmit(transaction);
   }
 }
