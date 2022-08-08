@@ -7,7 +7,7 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle heading = bold.copyWith(
+  static final TextStyle titleLarge = bold.copyWith(
     fontSize: 16,
   );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   static const purplePalette = Colors.purple;
+  static const amberPalette = Colors.amber;
   static const greyPalette = Colors.grey;
 
   static final purple = purplePalette.shade500;
