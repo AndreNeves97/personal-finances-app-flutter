@@ -54,7 +54,7 @@ class _PriceBadge extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppColors.purple,
+          color: Theme.of(context).colorScheme.primary,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(100),
@@ -64,7 +64,7 @@ class _PriceBadge extends StatelessWidget {
         currencyFormat.format(item.value),
         style: AppTextStyles.bold.copyWith(
           fontSize: 20,
-          color: AppColors.purple,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
     );
@@ -88,7 +88,7 @@ class _ItemDescription extends StatelessWidget {
       children: [
         Text(
           item.title,
-          style: AppTextStyles.heading,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         Text(
           dateFormat.format(item.date),
