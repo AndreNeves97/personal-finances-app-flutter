@@ -7,7 +7,8 @@ abstract class AppColors {
 
   static final purple = purplePalette.shade500;
 
-  static final lightGrey = greyPalette.shade600;
+  static final lightGrey = greyPalette.shade300;
+  static final darkerGrey = greyPalette.shade600;
 
   static final Color scaffoldBackground = greyPalette.shade50;
 }

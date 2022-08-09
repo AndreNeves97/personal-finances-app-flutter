@@ -1,30 +1,34 @@
 import 'package:financefy_app/app/modules/core/presenter/styles/app_spacing_styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/presenter/components/molecules/chart_bar_widget.dart';
 import '../../transactions_dashboard_store.dart';
 
-class TransactionsStatsWidget extends StatelessWidget {
+class TransactionsSummaryWidget extends StatelessWidget {
   final TransactionsDashboardStore store;
 
-  const TransactionsStatsWidget({Key? key, required this.store})
+  const TransactionsSummaryWidget({Key? key, required this.store})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final summaryItems = store.getSummaryItems();
+
     return Padding(
       padding: AppSpacingStyles.contentPadding,
       child: Card(
-        elevation: 5,
+        elevation: 6,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          height: 100,
+          height: 300,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: getStats()
+            children: summaryItems
                 .map(
-                  (stat) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(stat),
+                  (summaryItem) => ChartBarWidget(
+                    label: summaryItem.groupName,
+                    value: summaryItem.formattedAmount,
+                    percentage: summaryItem.amountPercentage,
                   ),
                 )
                 .toList(),
@@ -32,9 +36,5 @@ class TransactionsStatsWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<String> getStats() {
-    return store.state.data.stats;
   }
 }

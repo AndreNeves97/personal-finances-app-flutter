@@ -5,8 +5,11 @@ import 'app_text_styles.dart';
 
 abstract class AppThemes {
   static ThemeData get lightTheme {
-    return _baseTheme.copyWith(
-      colorScheme: _baseTheme.colorScheme.copyWith(
+    final referenceTheme = ThemeData.light();
+
+    final theme = ThemeData(
+      primarySwatch: AppColors.purplePalette,
+      colorScheme: referenceTheme.colorScheme.copyWith(
         primary: AppColors.purplePalette,
         secondary: AppColors.amberPalette,
       ),
@@ -19,13 +22,13 @@ abstract class AppThemes {
       scaffoldBackgroundColor: AppColors.scaffoldBackground,
       brightness: Brightness.light,
     );
+
+    return copyWithGeneralProperties(theme);
   }
 
-  static ThemeData get _baseTheme {
-    final baseTextTheme = ThemeData.light().textTheme;
-
-    return ThemeData(
-      textTheme: baseTextTheme.copyWith(
+  static ThemeData copyWithGeneralProperties(ThemeData theme) {
+    return theme.copyWith(
+      textTheme: theme.textTheme.copyWith(
         titleLarge: AppTextStyles.titleLarge,
       ),
     );

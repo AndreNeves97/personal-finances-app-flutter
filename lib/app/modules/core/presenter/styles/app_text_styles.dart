@@ -9,5 +9,6 @@ abstract class AppTextStyles {
 
   static final TextStyle titleLarge = bold.copyWith(
     fontSize: 16,
+    color: Colors.black,
   );
 }

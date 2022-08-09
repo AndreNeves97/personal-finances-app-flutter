@@ -8,7 +8,7 @@ import 'states/transactions_dashboard_state.dart';
 import 'transactions_dashboard_store.dart';
 
 import 'components/organisms/transactions_details_widget.dart';
-import 'components/organisms/transactions_stats_widget.dart';
+import 'components/organisms/transactions_summary_widget.dart';
 
 class TransactionsDashboardPage extends StatefulWidget {
   final String title;
@@ -80,7 +80,7 @@ class _Body extends StatelessWidget {
       builder: (context, constraints) {
         return Column(
           children: [
-            TransactionsStatsWidget(store: store),
+            TransactionsSummaryWidget(store: store),
             Expanded(
               child: TransactionsDetailsWidget(store: store),
             ),
