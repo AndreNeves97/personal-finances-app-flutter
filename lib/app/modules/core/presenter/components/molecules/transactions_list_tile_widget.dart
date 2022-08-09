@@ -17,18 +17,24 @@ class TransactionsListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat("dd MMM yyyy");
+    final currencyFormat =
+        NumberFormat.currency(locale: 'pt_BR', symbol: "R\$");
 
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: AppSpacingStyles.contentHorizontalPadding,
-        child: Row(
-          children: [
-            _PriceBadge(item: item),
-            _ItemDescription(item: item, dateFormat: dateFormat),
-          ],
+    return ListTile(
+      contentPadding: AppSpacingStyles.contentHorizontalPadding,
+      leading: _PriceBadge(item: item),
+      title: Text(
+        item.title,
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      subtitle: Text(
+        dateFormat.format(item.date),
+        style: TextStyle(
+          color: AppColors.darkerGrey,
         ),
       ),
+      trailing: Text(currencyFormat.format(item.value)),
+      onTap: () {},
     );
   }
 }
@@ -47,56 +53,21 @@ class _PriceBadge extends StatelessWidget {
         NumberFormat.currency(locale: 'pt_BR', symbol: "R\$");
 
     return Container(
-      margin: const EdgeInsets.only(
-        top: 10,
-        bottom: 10,
-        right: 15,
-      ),
+      height: 48,
+      width: 48,
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(100),
+        shape: BoxShape.circle,
+        color: Theme.of(context).primaryColorDark,
       ),
-      padding: const EdgeInsets.all(10),
-      child: Text(
-        currencyFormat.format(item.value),
-        style: AppTextStyles.bold.copyWith(
-          fontSize: 20,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
-    );
-  }
-}
-
-class _ItemDescription extends StatelessWidget {
-  const _ItemDescription({
-    Key? key,
-    required this.item,
-    required this.dateFormat,
-  }) : super(key: key);
-
-  final PersonalTransaction item;
-  final DateFormat dateFormat;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          item.title,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        Text(
-          dateFormat.format(item.date),
-          style: TextStyle(
-            color: AppColors.lightGrey,
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: FittedBox(
+          child: Text(
+            currencyFormat.format(item.value),
+            style: Theme.of(context).primaryTextTheme.bodyMedium,
           ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -18,10 +18,16 @@ class TransactionsDetailsWidget extends StatelessWidget {
     }
 
     return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (context, i) => TransactionsListTileWidget(
-        item: items[i],
-      ),
+      itemCount: items.length + 1,
+      itemBuilder: (context, i) {
+        if (i == items.length) {
+          return const SizedBox(height: 80);
+        }
+
+        return TransactionsListTileWidget(
+          item: items[i],
+        );
+      },
     );
   }
 }
